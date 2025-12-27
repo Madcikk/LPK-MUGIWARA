@@ -1,0 +1,286 @@
+/*
+  File: register.css
+  Simpan file ini sebagai "register.css" pada folder yang sama dengan Register.jsx
+*/
+
+:root{
+  --blue-700: #1d4ed8;
+}
+
+/* Page container */
+.register-page {
+  min-height: 85vh;
+  background: #f8fafc;
+  padding-bottom: 40px;
+}
+
+/*STEP NAVIGATION */
+.step-nav {
+  background: transparent;
+  margin-bottom: 18px;
+}
+
+.step-nav-inner {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.step-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+/* Step circle */
+.step-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.25s;
+}
+
+.step-label {
+  font-size: 13px;
+  color: #4b5563;
+  font-weight: 500;
+  transition: 0.25s;
+}
+
+/* Active step */
+.step-item.active .step-circle {
+  background: #1e40af;
+}
+.step-item.active .step-label {
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+/* Completed step */
+.step-item.done .step-circle {
+  background: #06b6d4;
+}
+.step-item.done .step-label {
+  color: #0e7490;
+}
+
+/* CARD CONTENT */
+.card-content {
+  position: relative;
+  min-height: 360px;
+}
+
+/* STEP PANEL: jangan gunakan absolute + pointer-events none untuk menghindari kehilangan fokus */
+.step-wrapper {
+  position: relative;
+  min-height: 265px;
+}
+
+.step-panel {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 200ms ease, opacity 200ms ease;
+  width: 100%;
+}
+
+/* animasi masuk ringan */
+.step-panel.enter {
+  animation: fadeIn 220ms ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/*INPUT STYLING */
+.step-panel input[type="text"],
+.step-panel input[type="date"],
+.step-panel input[type="number"],
+.step-panel input[type="email"],
+.step-panel input[type="file"],
+.step-panel select,
+.step-panel textarea {
+  color: #000 !important;               /* teks hitam */
+  background-color: #ffffff !important; /* background putih */
+}
+
+/* Perbaiki placeholder */
+.step-panel input::placeholder,
+.step-panel textarea::placeholder {
+  color: #555 !important;
+}
+
+/* Perbaiki border agar jelas */
+.step-panel input,
+.step-panel select,
+.step-panel textarea {
+  border-color: #d1d5db !important;
+}
+
+/* Label */
+.step-panel label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff; /* kept white for blue card */
+}
+
+/* Error Message */
+.text-error {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Success Message */
+.text-success {
+  color: #059669;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* BUTTON AREA */
+.btn-area {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.btn-primary {
+  background: var(--blue-700);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.btn-primary:hover {
+  background: #1e40af;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  .step-nav-inner {
+    padding: 10px;
+    gap: 6px;
+  }
+  .step-label {
+    display: none;
+  }
+  .card-content {
+    min-height: 500px;
+  }
+  .step-wrapper {
+    min-height: 420px;
+  }
+}
+
+.register-header {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  margin-bottom: 24px;
+}
+
+.register-info-box {
+  background: #e0ecff;
+  padding: 14px;
+  border-left: 5px solid #1e3a8a;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  color: #1e3a8a;
+}
+
+.step-label {
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  line-height: 1.2;
+  color: #333;
+}
+
+/* Judul Step */
+.step-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #0a3d91; /* biru gelap */
+}
+
+/* Deskripsi Step */
+.step-desc {
+  font-weight: 400;
+  font-size: 11px;
+  opacity: 0.7;
+  margin-top: 1px;
+}
+
+/* Step Active */
+.step-item.active .step-title {
+  color: #0b57ff;
+}
+
+.step-item.active .step-desc {
+  opacity: 1;
+}
+
+/* Step Done */
+.step-item.done .step-title {
+  color: #0b57ff;
+}
+
+.step-item.done .step-desc {
+  opacity: 0.8;
+}
+
+/* FIX CIRCLE */
+.step-circle {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Menghilangkan efek autofill Chrome (background kuning/teks putih) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #000 !important; /* teks hitam */
+  transition: background-color 9999s ease-in-out 0s; 
+  box-shadow: 0 0 0 1000px white inset !important; /* background putih */
+}
+/* Scrollbar kustom untuk textarea */
+.step-panel textarea {
+  scrollbar-width: thin;
+  scrollbar-color: #1d4ed8 #e5e7eb;
+}
+.step-panel textarea::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.step-panel textarea::-webkit-scrollbar-thumb {
+  background-color: #1d4ed8;
+  border-radius: 4px;
+}
+.step-panel textarea::-webkit-scrollbar-track {
+  background-color: #e5e7eb;
+}

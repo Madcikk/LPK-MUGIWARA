@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,body,#root{height:100%;}
+
+/* Untuk efek parallax sederhana kita pakai background-attachment: fixed pada hero (lihat component) */
