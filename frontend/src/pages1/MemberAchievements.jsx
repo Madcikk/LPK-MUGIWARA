@@ -121,7 +121,7 @@ export default function MemberAchievements() {
           {/* User Name & Avatar */}
           <div className="flex items-center gap-3">
             <img
-              src={member.foto}
+              src={member.foto ? member.foto : `https://ui-avatars.com/api/?name=${member.name}&background=random`}
               alt="Foto Member"
               className="w-10 h-10 rounded-full border-2 border-gray-200 object-cover"
             />

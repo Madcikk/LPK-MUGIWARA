@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import LandingDashboard from "./pages1/LandingDashboard";
 import Home from "./pages1/Home";
@@ -24,55 +24,130 @@ import RegisterStep2 from "./pages1/RegisterStep2";
 import RegisterStep3 from "./pages1/RegisterStep3";
 import RegisterStep4 from "./pages1/RegisterStep4";
 import RegisterFinish from "./pages1/RegisterFinish";
-
 import JepangDeskripsi from "./pages1/detail_program/Jepang_deskripsi";
 import KoreaDeskripsi from "./pages1/detail_program/Korea_deskripsi";
 import EropaDeskripsi from "./pages1/detail_program/Eropa_deskripsi";
-
 import DashboardMentor from "./pages1/mentor/DashboardMentor";
 
+const PrivateRoute = ({ children, allowedRoles }) => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(role)) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
+
 export default function App() {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  const getDashboardRoute = () => {
+    if (role === 'admin') return '/admin';
+    if (role === 'mentor') return '/mentor/dashboard';
+    return '/member';
+  };
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingDashboard />} />
-        <Route path="/home" element={<Home />} />
+        <Route 
+          path="/" 
+          element={token ? <Navigate to={getDashboardRoute()} replace /> : <LandingDashboard />} 
+        />
+        <Route 
+          path="/login" 
+          element={token ? <Navigate to={getDashboardRoute()} replace /> : <Login />} 
+        />
+        <Route 
+          path="/register" 
+          element={token ? <Navigate to={getDashboardRoute()} replace /> : <Register />} 
+        />
 
-        {/* PROGRAM */}
+        <Route path="/home" element={<Home />} />
         <Route path="/program" element={<Program />} />
         <Route path="/program_jepang" element={<Program_Jepang />} />
         <Route path="/program_korea" element={<Program_Korea />} />
         <Route path="/program_eropa" element={<Program_Eropa />} />
-
-        {/* OTHER PAGES */}
         <Route path="/galeri" element={<Galeri />} />
         <Route path="/kontak" element={<Kontak />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/register/mentor" element={<RegisterMentor />} />
-        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/berita" element={<Berita />} />
         <Route path="/berita/:id" element={<DetailBerita />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/member" element={<MemberDashboard />} />
-        <Route path="/member/dashboard" element={<MemberAchievements />} />
-        <Route path="/member/courses" element={<MemberCourses />} />
-        <Route path="/member/settings" element={<MemberSettings />} />
-
-        {/* REGISTER STEPS */}
+        <Route path="/detail_program/jepang_deskripsi" element={<JepangDeskripsi />} />
+        <Route path="/detail_program/korea_deskripsi" element={<KoreaDeskripsi />} />
+        <Route path="/detail_program/eropa_deskripsi" element={<EropaDeskripsi />} />
+        
         <Route path="/register/step1" element={<RegisterStep1 />} />
         <Route path="/register/step2" element={<RegisterStep2 />} />
         <Route path="/register/step3" element={<RegisterStep3 />} />
         <Route path="/register/step4" element={<RegisterStep4 />} />
         <Route path="/register/finish" element={<RegisterFinish />} />
 
-        {/* DETAIL PROGRAM */}
-        <Route path="/detail_program/jepang_deskripsi" element={<JepangDeskripsi />} />
-        <Route path="/detail_program/korea_deskripsi" element={<KoreaDeskripsi />} />
-        <Route path="/detail_program/eropa_deskripsi" element={<EropaDeskripsi />} />
+        <Route 
+          path="/member" 
+          element={
+            <PrivateRoute allowedRoles={['member']}>
+              <MemberDashboard />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/member/dashboard" 
+          element={
+            <PrivateRoute allowedRoles={['member']}>
+              <MemberAchievements />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/member/courses" 
+          element={
+            <PrivateRoute allowedRoles={['member']}>
+              <MemberCourses />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/member/settings" 
+          element={
+            <PrivateRoute allowedRoles={['member']}>
+              <MemberSettings />
+            </PrivateRoute>
+          } 
+        />
 
-        {/* MENTOR DASHBOARD */}
-        <Route path="/mentor/dashboard" element={<DashboardMentor />} />
-        <Route path="/dashboardMentor" element={<DashboardMentor />} />
+        <Route 
+          path="/admin" 
+          element={
+            <PrivateRoute allowedRoles={['admin']}>
+              <AdminDashboard />
+            </PrivateRoute>
+          } 
+        />
+
+        <Route 
+          path="/mentor/dashboard" 
+          element={
+            <PrivateRoute allowedRoles={['mentor']}>
+              <DashboardMentor />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/dashboardMentor" 
+          element={
+            <PrivateRoute allowedRoles={['mentor']}>
+              <DashboardMentor />
+            </PrivateRoute>
+          } 
+        />
 
       </Routes>
     </BrowserRouter>

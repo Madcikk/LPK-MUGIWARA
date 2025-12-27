@@ -86,7 +86,7 @@ export default function Korea() {
           onSuccess: function (result) {
             alert('Pembayaran Berhasil!');
             console.log(result);
-            navigate('/');
+            navigate('/member');
           },
           onPending: function (result) {
             alert('Menunggu Pembayaran...');

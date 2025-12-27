@@ -951,7 +951,7 @@ export default function RegisterMentor() {
             <button
               type="button"
               onClick={handlePrev}
-              disabled={step === 1}
+              // disabled={step === 1}
               className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 ${
                 step === 1
                   ? "bg-gray-100 text-gray-400 cursor-not-allowed"

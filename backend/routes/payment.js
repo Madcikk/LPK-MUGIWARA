@@ -1,6 +1,6 @@
 import express from 'express';
 import midtransClient from 'midtrans-client';
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import { verifyToken, requireRole } from '../middleware/auth.js';
 
 import { db } from '../db.js';
